@@ -12,10 +12,7 @@ import { toast } from "sonner";
 
 const Index = () => {
   const [location, setLocation] = useState("");
-  const [forecastData, setForecastData] = useState<any | null>(null);
-  const [loading, setLoading] = useState(false);
   const [showForecast, setShowForecast] = useState(false);
-
 
   // Mock data - In production, fetch from NASA TEMPO API, weather API, etc.
   const mockForecastData = [
@@ -35,29 +32,16 @@ const Index = () => {
     { name: "Hyderabad", aqi: 72, lat: 17.4, lng: 78.4, category: "Moderate" },
   ];
 
-  const handleSearch = async (searchLocation: string) => {
-  setLocation(searchLocation);
-  setLoading(true);
-  toast.success(`Fetching forecast for ${searchLocation}...`);
-
-  try {
-    const response = await fetch(`http://localhost:5000/api/forecast?city=${searchLocation}`);
-    if (!response.ok) throw new Error("Failed to fetch forecast. Try again!");
-    const data = await response.json();
-    setForecastData(data);
+  const handleSearch = (searchLocation: string) => {
+    setLocation(searchLocation);
     setShowForecast(true);
-
+    toast.success(`Fetching forecast for ${searchLocation}...`);
+    
     // Scroll to forecast section
     setTimeout(() => {
       document.getElementById("forecast")?.scrollIntoView({ behavior: "smooth" });
     }, 300);
-  } catch (err: any) {
-    toast.error(err.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -74,86 +58,77 @@ const Index = () => {
             </h2>
             <div className="grid lg:grid-cols-3 gap-6">
               <div className="lg:col-span-1">
-                {forecastData && (
-  <>
-    <ForecastCard
-      location={forecastData.city}
-      aqi={forecastData.aqi}
-      category={forecastData.category}
-      weather={{
-        temperature: forecastData.weather.temperature,
-        humidity: forecastData.weather.humidity,
-        windSpeed: forecastData.weather.windSpeed,
-      }}
-    />
-
-    <ForecastChart
-      data={forecastData.forecast5Day.map((day: any) => ({
-        day: `Day ${day.day}`,
-        aqi: day.aqi,
-      }))}
-    />
-  </>
-)}
-
+                <ForecastCard
+                  location={location}
+                  aqi={42}
+                  category="Good"
+                  weather={{
+                    temperature: 24,
+                    humidity: 65,
+                    windSpeed: 12,
+                  }}
+                />
+              </div>
+              <div className="lg:col-span-2">
+                <ForecastChart data={mockForecastData} />
               </div>
             </div>
           </section>
 
           {/* Pollutant Breakdown Section */}
           <section>
-  <h2 className="text-3xl font-bold text-foreground mb-8">Pollutant Levels</h2>
-  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <PollutantCard
-      name="PM2.5"
-      value={12.5}
-      unit="µg/m³"
-      icon={Cloud}
-      description="Fine particulate matter smaller than 2.5 micrometers. Primary health concern for respiratory issues."
-      status="good"
-    />
-    <PollutantCard
-      name="PM10"
-      value={28.3}
-      unit="µg/m³"
-      icon={Droplet}
-      description="Particulate matter smaller than 10 micrometers. Can irritate airways and lungs."
-      status="good"
-    />
-    <PollutantCard
-      name="NO₂"
-      value={35.2}
-      unit="ppb"
-      icon={Factory}
-      description="Nitrogen dioxide from vehicle emissions and industrial sources."
-      status="moderate"
-    />
-    <PollutantCard
-      name="O₃"
-      value={42.8}
-      unit="ppb"
-      icon={Zap}
-      description="Ground-level ozone, formed by reactions of pollutants in sunlight."
-      status="moderate"
-    />
-    <PollutantCard
-      name="CO"
-      value={0.5}
-      unit="ppm"
-      icon={Flame}
-      description="Carbon monoxide from incomplete combustion of fossil fuels."
-      status="good"
-    />
-    <PollutantCard
-      name="SO₂"
-      value={8.2}
-      unit="ppb"
-      icon={Wind}
-      description="Sulfur dioxide from burning coal and oil."
-      status="good"
-    />
-  </div>
-</section>
+            <h2 className="text-3xl font-bold text-foreground mb-8">Pollutant Levels</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <PollutantCard
+                name="PM2.5"
+                value={12.5}
+                unit="µg/m³"
+                icon={Cloud}
+                description="Fine particulate matter smaller than 2.5 micrometers. Primary health concern for respiratory issues."
+                status="good"
+              />
+              <PollutantCard
+                name="PM10"
+                value={28.3}
+                unit="µg/m³"
+                icon={Droplet}
+                description="Particulate matter smaller than 10 micrometers. Can irritate airways and lungs."
+                status="good"
+              />
+              <PollutantCard
+                name="NO₂"
+                value={35.2}
+                unit="ppb"
+                icon={Factory}
+                description="Nitrogen dioxide from vehicle emissions and industrial sources."
+                status="moderate"
+              />
+              <PollutantCard
+                name="O₃"
+                value={42.8}
+                unit="ppb"
+                icon={Zap}
+                description="Ground-level ozone, formed by reactions of pollutants in sunlight."
+                status="moderate"
+              />
+              <PollutantCard
+                name="CO"
+                value={0.5}
+                unit="ppm"
+                icon={Flame}
+                description="Carbon monoxide from incomplete combustion of fossil fuels."
+                status="good"
+              />
+              <PollutantCard
+                name="SO₂"
+                value={8.2}
+                unit="ppb"
+                icon={Wind}
+                description="Sulfur dioxide from burning coal and oil."
+                status="good"
+              />
+            </div>
+          </section>
 
           {/* Health Advisory Section */}
           <section id="about">
@@ -164,18 +139,7 @@ const Index = () => {
           {/* Interactive Map Section */}
           <section>
             <h2 className="text-3xl font-bold text-foreground mb-8">Regional Air Quality</h2>
-            <InteractiveMap
-  locations={[
-    {
-      name: forecastData?.city,
-      aqi: forecastData?.aqi,
-      lat: 28.6, // optional: you can hardcode lat/lng or get from API later
-      lng: 77.2,
-      category: forecastData?.category,
-    },
-  ]}
-/>
-
+            <InteractiveMap locations={mockMapLocations} />
           </section>
         </main>
       )}
