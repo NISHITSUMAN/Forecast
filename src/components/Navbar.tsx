@@ -38,10 +38,10 @@ export const Navbar = ({ currentAQI = 42, aqiCategory = "Good" }: NavbarProps) =
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#home" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+            <a href="https://aerometrics.vercel.app" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Home
             </a>
-            <a href="#forecast" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+            <a href="https://forecast-git-main-nishit-sumans-projects.vercel.app/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Forecast
             </a>
             <a href="#about" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
