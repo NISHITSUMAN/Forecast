@@ -41,20 +41,16 @@ export const Navbar = ({ currentAQI = 42, aqiCategory = "Good" }: NavbarProps) =
             <a href="https://aerometrics.vercel.app" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Home
             </a>
-            <a href="https://forecast-git-main-nishit-sumans-projects.vercel.app/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+            <a href="https://globe-3d-chi.vercel.app/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+              3D Globe
+            </a>
+            <a href="https://forecast-git-main-nishit-sumans-projects.vercel.app" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
               Forecast
             </a>
-            <a href="#about" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              About
+            <a href="https://aero-ai-mu.vercel.app/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+              AI
             </a>
-            <a href="#contact" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Contact
-            </a>
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted">
-              <div className={`w-2 h-2 rounded-full ${getAQIColor(aqiCategory)}`} />
-              <span className="text-xs font-semibold text-foreground">AQI {currentAQI}</span>
-              <span className="text-xs text-muted-foreground">{aqiCategory}</span>
-            </div>
+          
             <Button
               variant="ghost"
               size="icon"
