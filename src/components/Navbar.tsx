@@ -57,3 +57,5 @@ export default function Header() {
     </motion.header>
   );
 }
+
+export { Header as Navbar };
