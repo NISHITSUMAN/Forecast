@@ -1,9 +1,14 @@
 import { motion } from 'framer-motion';
 import { Satellite, Menu, Wind } from 'lucide-react';
 import { useState } from 'react';
+interface NavbarProps {
+  currentAQI: number;
+  aqiCategory: string;
+}
 
-export default function Header() {
+export default function Header({ currentAQI, aqiCategory }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 
   return (
     <motion.header
