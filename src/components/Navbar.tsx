@@ -1,123 +1,64 @@
-import { Wind, Menu, X, Moon, Sun } from "lucide-react";
-import { useState } from "react";
-import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
+import { motion } from 'framer-motion';
+import { Satellite, Menu } from 'lucide-react';
+import { useState } from 'react';
+import AQICard from '@/components/AQICard';
+import ForecastPanel from '@/components/ForecastPanel';
+import AQIChart from '@/components/AQIChart';
 
-interface NavbarProps {
-  currentAQI?: number;
-  aqiCategory?: string;
-}
-
-export const Navbar = ({ currentAQI = 42, aqiCategory = "Good" }: NavbarProps) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
-
-  const getAQIColor = (category: string) => {
-    const colors: Record<string, string> = {
-      Good: "bg-aqi-good",
-      Moderate: "bg-aqi-moderate",
-      "Unhealthy for Sensitive Groups": "bg-aqi-sensitive",
-      Unhealthy: "bg-aqi-unhealthy",
-      "Very Unhealthy": "bg-aqi-veryUnhealthy",
-      Hazardous: "bg-aqi-hazardous",
-    };
-    return colors[category] || "bg-aqi-good";
-  };
+export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-soft">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border"
+    >
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Wind className="w-8 h-8 text-primary" />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            >
+              <Satellite className="w-8 h-8 text-accent" />
+            </motion.div>
             <div>
-              <h1 className="font-bold text-lg text-foreground">AirWatch</h1>
-              <p className="text-xs text-muted-foreground">EarthData Forecast</p>
+              <h1 className="text-xl font-bold text-gradient">Aero AI</h1>
+              <p className="text-xs text-muted-foreground">AI for anything, anywher</p>
             </div>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
-            <a href="https://aerometrics.vercel.app" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Home
-            </a>
-            <a href="https://globe-3d-chi.vercel.app/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              3D Globe
-            </a>
-            <a href="https://forecast-git-main-nishit-sumans-projects.vercel.app" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              Forecast
-            </a>
-            <a href="https://aero-ai-mu.vercel.app/" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
-              AI
-            </a>
-          
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-          </div>
+          <nav className="hidden md:flex items-center gap-6">
+            <a href="https://aerometrics.vercel.app/" className="text-sm font-medium hover:text-accent transition-colors">Home</a>
+            <a href="https://at-location.vercel.app/" className="text-sm font-medium hover:text-accent transition-colors">At Location</a>
+            <a href="https://forecast-plum.vercel.app/" className="text-sm font-medium hover:text-accent transition-colors">Forecast</a>
+            <a href="https://aero-ai-one.vercel.app/" className="text-sm font-medium hover:text-accent transition-colors">AI</a>
+          </nav>
+          </nav>
 
-          {/* Mobile Menu Button */}
-          <div className="flex items-center gap-2 md:hidden">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </Button>
-          </div>
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 hover:bg-muted rounded-lg transition-colors"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
         </div>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden py-4 space-y-3 animate-slide-up">
-            <a
-              href="#home"
-              className="block px-3 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-md transition-colors"
-            >
-              Home
-            </a>
-            <a
-              href="#forecast"
-              className="block px-3 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-md transition-colors"
-            >
-              Forecast
-            </a>
-            <a
-              href="#about"
-              className="block px-3 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-md transition-colors"
-            >
-              About
-            </a>
-            <a
-              href="#contact"
-              className="block px-3 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-md transition-colors"
-            >
-              Contact
-            </a>
-            <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-muted">
-              <div className={`w-2 h-2 rounded-full ${getAQIColor(aqiCategory)}`} />
-              <span className="text-xs font-semibold text-foreground">AQI {currentAQI}</span>
-              <span className="text-xs text-muted-foreground">{aqiCategory}</span>
-            </div>
-          </div>
+        {isMenuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="md:hidden mt-4 pb-4 flex flex-col gap-3"
+          >
+            <a href="https://aerometrics.vercel.app/" className="text-sm font-medium hover:text-accent transition-colors">Home</a>
+            <a href="https://globe-3d-chi.vercel.app/" className="text-sm font-medium hover:text-accent transition-colors">3D Earth</a>
+            <a href="#forecast" className="text-sm font-medium hover:text-accent transition-colors">Forecast</a>
+            <a href="#data" className="text-sm font-medium hover:text-accent transition-colors">Data</a>
+            <a href="https://aero-ai-mu.vercel.app/" className="text-sm font-medium hover:text-accent transition-colors">AI</a>
+          </motion.nav>
         )}
       </div>
-    </nav>
+    </motion.header>
   );
-};
+}
