@@ -18,8 +18,5 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist", // explicitly tell Vite to output here
   },
-  base: "/",
-  rewrites: [
-    { source: "/(.*)", destination: "/index.html" }
-  ]
+  base: "/"
 }));
