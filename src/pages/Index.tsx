@@ -10,7 +10,7 @@ import { Footer } from "@/components/Footer";
 import { Cloud, Droplet, Wind, Flame, Zap, Factory } from "lucide-react";
 import { toast } from "sonner";
 
-const apiUrl = import.meta.env.VITE_API_URL || "https://forecast-578r.onrender.com";
+const apiUrl = import.meta.env.VITE_API_URL || "https://forecast-95ev.onrender.com";
 
 const Index = () => {
   const [location, setLocation] = useState("");
