@@ -10,6 +10,8 @@ import { Footer } from "@/components/Footer";
 import { Cloud, Droplet, Wind, Flame, Zap, Factory } from "lucide-react";
 import { toast } from "sonner";
 
+const apiUrl = import.meta.env.VITE_API_URL || "https://forecast-578r.onrender.com";
+
 const Index = () => {
   const [location, setLocation] = useState("");
   const [showForecast, setShowForecast] = useState(false);
@@ -21,7 +23,7 @@ const Index = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://localhost:5000/api/forecast?city=${encodeURIComponent(searchLocation)}`);
+      const res = await fetch(`${apiUrl}/api/forecast?city=${encodeURIComponent(searchLocation)}`);
       if (!res.ok) throw new Error("Failed to fetch forecast");
       const data = await res.json();
       setForecastData(data);
