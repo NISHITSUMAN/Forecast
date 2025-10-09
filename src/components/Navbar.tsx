@@ -87,28 +87,28 @@ export const Navbar = ({ currentAQI = 42, aqiCategory = "Good" }: NavbarProps) =
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-3 animate-slide-up">
             <a
-              href="#home"
+              href="https://aerometrics-wine.vercel.app/"
               className="block px-3 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-md transition-colors"
             >
               Home
             </a>
             <a
-              href="#forecast"
+              href="https://at-location.vercel.app/"
+              className="block px-3 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-md transition-colors"
+            >
+              At Location
+            </a>
+            <a
+              href="https://forecast-git-main-nishit-sumans-projects.vercel.app"
               className="block px-3 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-md transition-colors"
             >
               Forecast
             </a>
             <a
-              href="#about"
+              href="ttps://aero-ai-mu.vercel.app/"
               className="block px-3 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-md transition-colors"
             >
-              About
-            </a>
-            <a
-              href="#contact"
-              className="block px-3 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-md transition-colors"
-            >
-              Contact
+              AI
             </a>
             <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-muted">
               <div className={`w-2 h-2 rounded-full ${getAQIColor(aqiCategory)}`} />
